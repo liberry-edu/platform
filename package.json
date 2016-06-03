@@ -1,0 +1,28 @@
+{
+  "name": "platform",
+  "version": "1.0.0",
+  "description": "Pi and Central Backend for Liberry project",
+  "main": "app.js",
+  "scripts": {
+    "test": "vows --spec test/*"
+  },
+  "author": "Vaibhav Sinha",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^1.4.0",
+    "async": "^2.0.0-rc.5",
+    "bcrypt": "^0.8.6",
+    "boom": "^3.2.1",
+    "directory-tree": "^1.0.0",
+    "getmac": "^1.2.1",
+    "hapi": "^13.4.1",
+    "hapi-auth-basic": "^4.2.0",
+    "hapi-authorization": "^3.0.2",
+    "inert": "^4.0.0",
+    "ng-admin": "^1.0.0-alpha2",
+    "ng-file-upload": "^12.0.4",
+    "sequelize": "^3.23.3",
+    "sqlite3": "^3.1.4",
+    "vows": "^0.8.1"
+  }
+}

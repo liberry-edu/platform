@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-lg-12">
+        <ma-view-actions><ma-back-button></ma-back-button></ma-view-actions>
+        <div class="page-header">
+            <h1>Sync central server with pendrive</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- <div class="col-lg-5"><input type="text" size="10" ng-model="controller.path" class="form-control" placeholder="/path/to/pendrive/sql/file"/></div> -->
+    <span class="btn btn-default btn-file col-lg-1" ngf-select ng-model="file" name="file" ngf-pattern=".sql" ngf-valid-only>{{file.name || 'Select SQL File'}}</span><div></div>
+    <div class="col-lg-5"><button class="btn btn-default" ng-click="controller.syncDb()" ng-disabled="!file">Sync Database</button></div>
+</div>
+<br><hr><br>
+<div class="row">
+    <div class="col-lg-5"><a class="btn btn-default" ng-click="controller.prepareDriveContent()">Prepare Pendrive Content</a></div>
+</div>
