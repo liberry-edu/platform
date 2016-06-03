@@ -8,8 +8,7 @@ var ready = function(server, next) {
         config : {
             handler: {
                 directory: {
-                    path: ['../public/' + server.env.mode, '../node_modules'],
-                    //index: ['html/index.html']
+                    path: ['public/' + server.env.mode, 'node_modules']
                 }
             },
             auth: false
@@ -21,7 +20,7 @@ var ready = function(server, next) {
         path: '/',
         config : {
             handler: {
-                file: '../public'  + server.env.mode + '/html/index.html'
+                file: 'public/'  + server.env.mode + '/html/index.html'
             },
             auth: false
         }
@@ -31,7 +30,7 @@ var ready = function(server, next) {
 }
 
 exports.register = function (server, options, next) {
-    server.dependency('env', ready);
+    server.dependency('auth', ready);
     next();
 };
 

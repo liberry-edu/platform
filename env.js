@@ -1,7 +1,5 @@
 module.exports = {
     "development" : {
-        "host": process.env.HOST || "loclhost",
-        "port": process.env.PORT || 8080,
         "mode": process.env.MODE || "pi",
         "content_root": process.env.LIBERRY_ROOT + "/content",
         "code_root": process.env.LIBERRY_ROOT + "/code",
@@ -15,8 +13,6 @@ module.exports = {
         }
     },
     "production" : {
-        "host": process.env.HOST || "loclhost",
-        "port": process.env.PORT || 8080,
         "content_root": process.env.LIBERRY_ROOT + "/content",
         "code_root": process.env.LIBERRY_ROOT + "/code",
         "sequelize": {

@@ -1,4 +1,5 @@
 'use strict';
+const DirTree = require('directory-tree');
 
 var ready = function(server, next) {
 

@@ -2,7 +2,6 @@
 
 const Hapi = require('hapi');
 const Inert = require('inert');
-const DirTree = require('directory-tree');
 const Db = require('./models/db');
 const Auth = require('./middleware/auth');
 const Mac = require('./middleware/mac');
@@ -84,6 +83,7 @@ server.register(plugins, (err) => {
         if (err) {
             throw err;
         }
+        console.log('The mode is:', server.env.mode);
         console.log('Server running at:', server.info.uri);
     });
 });
