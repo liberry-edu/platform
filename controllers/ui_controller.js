@@ -4,12 +4,10 @@ var ready = function(server, next) {
 
     server.route({
         method: 'GET',
-        path: '/{param*}',
+        path: '/',
         config : {
             handler: {
-                directory: {
-                    path: ['public/' + server.env.mode, 'node_modules']
-                }
+                file: 'public/'  + server.env.mode + '/html/index.html'
             },
             auth: false
         }
@@ -24,5 +22,5 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-    name : 'static_controller'
+    name : 'ui_controller'
 };

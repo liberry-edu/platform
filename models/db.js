@@ -21,7 +21,9 @@ var ready = function(server, next) {
         Playlist : require('./playlist')(sequelize, Sequelize),
         PlaylistContent : require('./playlistcontent')(sequelize, Sequelize),
         Device : require('./device')(sequelize, Sequelize),
-        Location : require('./location')(sequelize, Sequelize)
+        Location : require('./location')(sequelize, Sequelize),
+        App : require('./app')(sequelize, Sequelize),
+        Activity : require('./activity')(sequelize, Sequelize)
       }
 
     server.decorate('server', 'db', db);

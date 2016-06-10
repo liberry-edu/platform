@@ -11,6 +11,7 @@ const AdminController = require('./controllers/admin_controller');
 const RestController = require('./controllers/rest_controller');
 const StaticController = require('./controllers/static_controller');
 const MiscController = require('./controllers/misc_controller');
+const UiController = require('./controllers/ui_controller');
 
 //Check all required env variables are set or not
 if(!(process.env.LIBERRY_ROOT)) {
@@ -69,6 +70,10 @@ var plugins = [
     },
     {
         register: MiscController,
+        options: {}
+    },
+    {
+        register: UiController,
         options: {}
     }];
 

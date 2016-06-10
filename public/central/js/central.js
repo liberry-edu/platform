@@ -80,11 +80,25 @@ var centralApp = angular.module('centralApp', ['ng-admin', 'ngFileUpload']);
         var admin = nga.application('Liberry Central')//.baseApiUrl('http://localhost:8000/');
 
         //Define entites
+        var app = nga.entity('apps');
         var category = nga.entity('categories');
         var module = nga.entity('modules');
         var content = nga.entity('contents');
         var playlist = nga.entity('playlists');
         var playlist_content = nga.entity('playlist_contents');
+
+        //Add app entity
+        app.listView().fields([
+            nga.field('name').isDetailLink(true),
+            nga.field('description'),
+            nga.field('status')
+        ]);
+        app.creationView().fields([
+            nga.field('name'),
+            nga.field('description')
+        ]);
+        app.editionView().fields(category.creationView().fields());
+        admin.addEntity(app);
 
         //Add category entity
         category.listView().fields([

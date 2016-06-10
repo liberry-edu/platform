@@ -4,6 +4,30 @@ const RestHandler = require('../helpers/rest_handler');
 const ModuleRestHandler = require('./handlers/module_rest_handler');
 const PlaylistRestHandler = require('./handlers/playlist_rest_handler');
 
+const readPermissions = [
+    ['ADMIN'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN'],
+    ['ADMIN']
+];
+
+const writePermissions = [
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN']
+];
+
+const deletePermissions = [
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER'],
+    ['ADMIN', 'USER']
+];
+
 var ready = function(server, next) {
     const categoryHandler = new RestHandler(server.db.Category);
     register(server, '/categories', categoryHandler);
@@ -26,10 +50,20 @@ var ready = function(server, next) {
     const locationHandler = new RestHandler(server.db.Location);
     register(server, '/locations', locationHandler);
 
+    const appHandler = new RestHandler(server.db.App);
+    register(server, '/apps', appHandler);
+
+    const activityHandler = new RestHandler(server.db.Activity);
+    register(server, '/activities', activityHandler, writePermissions);
+
     next();
 }
 
 var register = function(server, endpoint, handler) {
+    register(server, endpoint, handler, readPermissions);
+}
+
+var register = function(server, endpoint, handler, permissions) {
 
     server.route({
         method: 'POST',
@@ -38,7 +72,7 @@ var register = function(server, endpoint, handler) {
             handler: function(request, reply) {
                 handler.create(request, reply);
             },
-            plugins: {'hapiAuthorization': ['ADMIN']}
+            plugins: {'hapiAuthorization': permissions[0]}
         }
     });
 
@@ -49,7 +83,7 @@ var register = function(server, endpoint, handler) {
             handler: function(request, reply) {
                 handler.readAll(request, reply);
             },
-            plugins: {'hapiAuthorization': ['ADMIN', 'USER']}
+            plugins: {'hapiAuthorization': permissions[1]}
         }
     });
 
@@ -60,7 +94,7 @@ var register = function(server, endpoint, handler) {
             handler: function(request, reply) {
                 handler.readOne(request, reply);
             },
-            plugins: {'hapiAuthorization': ['ADMIN', 'USER']}
+            plugins: {'hapiAuthorization': permissions[2]}
         }
     });
 
@@ -71,7 +105,7 @@ var register = function(server, endpoint, handler) {
             handler: function(request, reply) {
                 handler.update(request, reply);
             },
-            plugins: {'hapiAuthorization': ['ADMIN']}
+            plugins: {'hapiAuthorization': permissions[3]}
         }
     });
 
@@ -82,7 +116,7 @@ var register = function(server, endpoint, handler) {
             handler: function(request, reply) {
                 handler.delete(request, reply);
             },
-            plugins: {'hapiAuthorization': ['ADMIN']}
+            plugins: {'hapiAuthorization': permissions[4]}
         }
     });
 }
