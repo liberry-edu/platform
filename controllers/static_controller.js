@@ -15,14 +15,56 @@ var ready = function(server, next) {
         }
     });
 
+    // server.route({
+    //     method: 'GET',
+    //     path: '/',
+    //     config : {
+    //         handler: {
+    //             file: 'public/'  + server.env.mode + '/html/index.html'
+    //         },
+    //         auth: false
+    //     }
+    // });
+
     server.route({
         method: 'GET',
         path: '/',
         config : {
-            handler: {
-                file: 'public/'  + server.env.mode + '/html/index.html'
+            handler: function(request, reply) {
+                if (request.auth.isAuthenticated) {
+                    if(request.auth.credentials.role == 'USER') {
+                        return reply.redirect('/dashboard/user');
+                    }
+                    else {
+                        return reply.redirect('/dashboard/admin');
+                    }
+                }
+                else {
+                    return reply.file('login.html');
+                }
             },
             auth: false
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/dashboard/admin',
+        config : {
+            handler: {
+                file: 'public/'  + server.env.mode + '/html/admin.html'
+            },
+            plugins: {'hapiAuthorization': {role: 'ADMIN'}}
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/dashboard/user',
+        config : {
+            handler: {
+                file: 'public/'  + server.env.mode + '/html/user.html'
+            },
         }
     });
 

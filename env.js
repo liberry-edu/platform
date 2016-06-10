@@ -8,7 +8,7 @@ module.exports = {
           "password": "password",
           "database": "database",
           "host": "localhost",
-          "storage": process.env.LIBERRY_ROOT + "/database.sqlite",
+          "storage": process.env.LIBERRY_ROOT + "/database_central.sqlite",
           "dialect": "sqlite"
         }
     },

@@ -1,10 +1,10 @@
 var centralApp = angular.module('centralApp', ['ng-admin', 'ngFileUpload']);
     centralApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', '$stateProvider', function(NgAdminConfigurationProvider, RestangularProvider, $stateProvider) {
         //Add auth details to all requests
-        var login = 'vaibhav',
-        password = 'password',
-        token = window.btoa(login + ':' + password);
-        RestangularProvider.setDefaultHeaders({'Authorization': 'Basic ' + token});
+        // var login = 'vaibhav',
+        // password = 'password',
+        // token = window.btoa(login + ':' + password);
+        // RestangularProvider.setDefaultHeaders({'Authorization': 'Basic ' + token});
 
         //Change the query parameter names
         RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
