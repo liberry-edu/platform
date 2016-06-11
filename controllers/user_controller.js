@@ -60,6 +60,50 @@ var ready = function(server, next) {
         }
     });
 
+    server.route({
+        method: 'POST',
+        path: '/isValidUser',
+        config: {
+            handler: function(request, reply) {
+                async.waterfall([
+                    function(callback) {
+                        server.db.User.findOne({
+                            where: {
+                              username: request.payload.username
+                            }
+                        }).then(function(user) {
+                            if(user) {
+                                callback(null, user);
+                            }
+                            else {
+                                return reply(false);
+                            }
+                        })
+                    },
+                    function(user, callback) {
+                        Bcrypt.hash(request.payload.password, 8 , function(err, hash) {
+                            if(hash == user.password) {
+                                return reply(true);
+                            }
+                            else {
+                                return reply(false);
+                            }
+                        });
+                    }
+                ], function(err, user) {
+                    if(err) {
+                        reply(Boom.badRequest(err));
+                    }
+                    else {
+                        reply(true);
+                    }
+                })
+            },
+            auth: false,
+            plugins: {'hapiAuthorization': false}
+        }
+    })
+
     next();
 }
 
