@@ -59,11 +59,11 @@ var ready = function(server, next) {
     next();
 }
 
-var register = function(server, endpoint, handler) {
-    register(server, endpoint, handler, readPermissions);
-}
-
 var register = function(server, endpoint, handler, permissions) {
+
+    if(!permissions) {
+        permissions = readPermissions;
+    }
 
     server.route({
         method: 'POST',
