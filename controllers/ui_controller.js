@@ -13,6 +13,17 @@ var ready = function(server, next) {
         }
     });
 
+    server.route({
+        method: 'GET',
+        path: '/video',
+        config : {
+            handler: {
+                file: 'public/'  + server.env.mode + '/html/video.html'
+            },
+            auth: false
+        }
+    });
+
     next();
 }
 
