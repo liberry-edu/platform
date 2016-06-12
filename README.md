@@ -28,10 +28,11 @@
 1. Node.js based backend
 2. Hapi.js as the web framework on top of Node.js
 3. PM2 as the process manager to run, monitor, log
-4. SQLite3 as the Database
-5. Sequelize as the ORM and Migration framework
-6. Vows.js as the testing framework
-7. Travis CI for automated testing
+4. SQLite3 as the Database for the Pi server
+5. MySQL as the Database for the Central server
+6. Sequelize as the ORM and Migration framework
+7. Vows.js as the testing framework
+8. Travis CI for automated testing
 
 ## Database tables
 1. user - Represents both the end user and the admin. The difference between end user and admin is the 'role' field.
@@ -42,6 +43,8 @@
 6. playlist_content - Used to define the content that a playlist contains along with the order in which the content should be played.
 7. device - Represents a Raspberry Pi device
 8. location - Represents a location(school, village, etc) where a Rapsberry Pi is installed
+9. app -Represents a frontend app that is deployed on the Pi
+10. activity - Captures the action of a user watching a content
 
 ## Central User Features
 1. User can register to the app using /register endpoint and providing necessary details
