@@ -81,8 +81,11 @@ var ready = function(server, next) {
                         })
                     },
                     function(user, callback) {
-                        Bcrypt.hash(request.payload.password, 8 , function(err, hash) {
-                            if(hash == user.password) {
+                        Bcrypt.compare(request.payload.password, user.password, (err, isValid) => {
+                            if(err) {
+                                err = Boom.badImplementation(err);
+                            }
+                            if(isValid) {
                                 return reply(true);
                             }
                             else {

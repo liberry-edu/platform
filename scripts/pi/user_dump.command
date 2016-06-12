@@ -1,3 +1,4 @@
-.mode csv user
+.mode csv
 .output user.csv
 select * from user;
+.output stdout

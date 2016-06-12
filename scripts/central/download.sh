@@ -3,11 +3,12 @@
 
 mkdir -p $LIBERRY_ROOT/output/central;
 rm $LIBERRY_ROOT/output/central/*.sql || true;
-sqlite3 -init $LIBERRY_ROOT/code/scripts/central/category_dump.command $LIBERRY_ROOT/database.sqlite;
-sqlite3 -init $LIBERRY_ROOT/code/scripts/central/content_dump.command $LIBERRY_ROOT/database.sqlite;
-sqlite3 -init $LIBERRY_ROOT/code/scripts/central/module_dump.command $LIBERRY_ROOT/database.sqlite;
-sqlite3 -init $LIBERRY_ROOT/code/scripts/central/playlist_dump.command $LIBERRY_ROOT/database.sqlite;
-sqlite3 -init $LIBERRY_ROOT/code/scripts/central/playlist_content_dump.command $LIBERRY_ROOT/database.sqlite;
+
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry category > category.sql;
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry content > content.sql;
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry module > module.sql;
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry playlist > playlist.sql;
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry playlist_content > playlist_content.sql;
 
 cp *.sql $LIBERRY_ROOT/output/central/;
 rm *.sql;
