@@ -1,5 +1,9 @@
 module.exports = function(sequelize, Sequelize) {
   var User = sequelize.define('user', {
+    external_id: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
     mac: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -10,8 +14,7 @@ module.exports = function(sequelize, Sequelize) {
     },
     username: {
       type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     email: {
       type: Sequelize.STRING,

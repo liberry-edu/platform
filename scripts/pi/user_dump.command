@@ -1,4 +1,3 @@
-.mode insert user
-.output user.sql
+.mode csv user
+.output user.csv
 select * from user;
-.output stdout

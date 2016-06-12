@@ -6,10 +6,10 @@ module.exports = {
         "sequelize": {
           "username": "root",
           "password": "password",
-          "database": "database",
+          "database": "liberry",
           "host": "localhost",
           "storage": process.env.LIBERRY_ROOT + "/database.sqlite",
-          "dialect": "sqlite"
+          "dialect": process.env.MODE == "central" ? "mysql" : "sqlite"
         }
     },
     "production" : {
@@ -18,10 +18,10 @@ module.exports = {
         "sequelize": {
           "username": "root",
           "password": "password",
-          "database": "database",
+          "database": "liberry",
           "host": "localhost",
           "storage": process.env.LIBERRY_ROOT + "/database.sqlite",
-          "dialect": "sqlite"
+          "dialect": process.env.MODE == "central" ? "mysql" : "sqlite"
         }
     }
 }

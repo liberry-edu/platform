@@ -9,6 +9,10 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.INTEGER
           },
+          external_id: {
+            allowNull: true,
+            type: Sequelize.INTEGER
+          },
           mac: {
             type: Sequelize.STRING,
             allowNull: false
@@ -45,7 +49,14 @@ module.exports = {
             type: Sequelize.DATE
           }
         }).then(function() {
-          return queryInterface.addIndex('user', ['username']);
+            if(process.env.MODE == 'central') {
+                queryInterface.addIndex('user', ['username']).then(function() {
+                    return queryInterface.addIndex('user', ['external_id', 'mac'], {indicesType: 'UNIQUE'});
+                });
+            }
+            else {
+                return queryInterface.addIndex('user', ['username']);
+            }
         });
 
     },
