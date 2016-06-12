@@ -50,7 +50,7 @@ module.exports = {
           }
         }).then(function() {
             if(process.env.MODE == 'central') {
-                queryInterface.addIndex('user', ['username']).then(function() {
+                return queryInterface.addIndex('user', ['username']).then(function() {
                     return queryInterface.addIndex('user', ['external_id', 'mac'], {indicesType: 'UNIQUE'});
                 });
             }

@@ -1,6 +1,14 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var activity = sequelize.define('activity', {
+    external_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    mac: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

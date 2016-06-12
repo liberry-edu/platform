@@ -3,6 +3,7 @@
 const RestHandler = require('../helpers/rest_handler');
 const ModuleRestHandler = require('./handlers/module_rest_handler');
 const PlaylistRestHandler = require('./handlers/playlist_rest_handler');
+const ActivityRestHandler = require('./handlers/activity_rest_handler');
 
 const readPermissions = [
     ['ADMIN'],
@@ -53,7 +54,7 @@ var ready = function(server, next) {
     const appHandler = new RestHandler(server.db.App);
     register(server, '/apps', appHandler);
 
-    const activityHandler = new RestHandler(server.db.Activity);
+    const activityHandler = new ActivityRestHandler(server.db.Activity);
     register(server, '/activities', activityHandler, writePermissions);
 
     next();
