@@ -4,11 +4,17 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     description: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     }
   },
   {

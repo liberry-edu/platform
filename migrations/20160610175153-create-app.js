@@ -19,6 +19,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
@@ -27,7 +31,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+  }).then(function() {
+      return queryInterface.addIndex('app', ['name'], {indicesType: 'UNIQUE'}).then(function() {
+          return queryInterface.addIndex('app', ['url'], {indicesType: 'UNIQUE'});
+      });
+  });
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable('app');
