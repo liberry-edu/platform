@@ -13,6 +13,10 @@ module.exports = function(sequelize, DataTypes) {
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    parent_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   },
   {

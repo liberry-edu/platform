@@ -119,12 +119,14 @@ var centralApp = angular.module('centralApp', ['ng-admin', 'ngFileUpload']);
             nga.field('name').isDetailLink(true),
             nga.field('description'),
             nga.field('status'),
-            nga.field('category_id', 'reference').label('Category').targetEntity(category).targetField(nga.field('name'))
+            nga.field('category_id', 'reference').label('Category').targetEntity(category).targetField(nga.field('name')),
+            nga.field('parent_id', 'reference').label('Parent').targetEntity(module).targetField(nga.field('name'))
         ]);
         module.creationView().fields([
             nga.field('name'),
             nga.field('description'),
             nga.field('category_id', 'reference').label('Category').targetEntity(category).targetField(nga.field('name')),
+            nga.field('parent_id', 'reference').label('Parent').targetEntity(module).targetField(nga.field('name')),
             nga.field('content', 'referenced_list').targetEntity(content).targetReferenceField('module_id').targetFields([nga.field('name')])
         ]);
         module.editionView().fields(module.creationView().fields());
