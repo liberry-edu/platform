@@ -7,3 +7,4 @@ sqlite3 $LIBERRY_ROOT/database.sqlite < $1/output/central/module.sql
 sqlite3 $LIBERRY_ROOT/database.sqlite < $1/output/central/content.sql
 sqlite3 $LIBERRY_ROOT/database.sqlite < $1/output/central/playlist.sql
 sqlite3 $LIBERRY_ROOT/database.sqlite < $1/output/central/playlist_content.sql
+sqlite3 $LIBERRY_ROOT/database.sqlite < $1/output/central/app.sql

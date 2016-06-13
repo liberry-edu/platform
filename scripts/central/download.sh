@@ -9,6 +9,7 @@ mysqldump --no-create-info --add_locks=false --host localhost --u root --passwor
 mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry module > module.sql;
 mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry playlist > playlist.sql;
 mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry playlist_content > playlist_content.sql;
+mysqldump --no-create-info --add_locks=false --host localhost --u root --password=password liberry app > app.sql;
 
 cp *.sql $LIBERRY_ROOT/output/central/;
 rm *.sql;
