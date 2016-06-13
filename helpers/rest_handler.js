@@ -31,10 +31,10 @@ module.exports = class RestHandler {
     readAll(request, reply) {
         var options = {};
         if(request.query.offset) {
-            options.offset = request.query.offset;
+            options.offset = parseInt(request.query.offset);
         }
         if(request.query.limit) {
-            options.limit = request.query.limit;
+            options.limit = parseInt(request.query.limit);
         }
         if(request.query.filters) {
             options.where = JSON.parse(request.query.filters);
