@@ -14,8 +14,10 @@
 6. sudo apt-get install sqlite3
 7. cd /home/<username>/liberry/code
 8. npm install
-9. sequelize db:migrate
-10. sudo apt-get install mysql-client-5.5
+9. Create database 'liberry' in your MySQL instance
+10. Update the password for 'root' user in the env.js file
+11. sequelize db:migrate
+12. sudo apt-get install mysql-client-5.5
 
 ## Running instructions
 1. cd into $LIBERRY_HOME/pi/code or $LIBERRY_HOME/central/code depending upon which server you want to run
