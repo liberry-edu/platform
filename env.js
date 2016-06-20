@@ -13,6 +13,7 @@ module.exports = {
         }
     },
     "production" : {
+        "mode": process.env.MODE || "pi",
         "content_root": process.env.LIBERRY_ROOT + "/content",
         "code_root": process.env.LIBERRY_ROOT + "/code",
         "sequelize": {
