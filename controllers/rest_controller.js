@@ -4,6 +4,7 @@ const RestHandler = require('../helpers/rest_handler');
 const ModuleRestHandler = require('./handlers/module_rest_handler');
 const PlaylistRestHandler = require('./handlers/playlist_rest_handler');
 const ActivityRestHandler = require('./handlers/activity_rest_handler');
+const ContentRestHandler = require('./handlers/content_rest_handler');
 
 const readPermissions = [
     ['ADMIN'],
@@ -33,13 +34,13 @@ var ready = function(server, next) {
     const categoryHandler = new RestHandler(server.db.Category);
     register(server, '/categories', categoryHandler);
 
-    const moduleHandler = new ModuleRestHandler(server.db.Module, server.db.Content);
+    const moduleHandler = new ModuleRestHandler(server.db);
     register(server, '/modules', moduleHandler);
 
     const playlistHandler = new PlaylistRestHandler(server.db.Playlist, server.db.PlaylistContent);
     register(server, '/playlists', playlistHandler);
 
-    const contentHandler = new RestHandler(server.db.Content);
+    const contentHandler = new ContentRestHandler(server.db);
     register(server, '/contents', contentHandler);
 
     const playlistContentHandler = new RestHandler(server.db.PlaylistContent);

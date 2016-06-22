@@ -15,6 +15,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      image: {
+          type: Sequelize.STRING
+      },
       status: {
         allowNull: false,
         type: Sequelize.STRING
@@ -24,6 +27,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       parent_id: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
+      default_playlist_id: {
         allowNull: true,
         type: Sequelize.INTEGER
       },

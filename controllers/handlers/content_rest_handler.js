@@ -6,35 +6,11 @@ const RestHandler = require('../../helpers/rest_handler');
 const ActivityService = require('../../service/activity_service');
 const PlaylistService = require('../../service/playlist_service');
 
-module.exports = class ModuleRestHandler extends RestHandler {
+module.exports = class ContentRestHandler extends RestHandler {
     constructor(db) {
-        super(db.Module);
-        this.contentModel = db.Content;
+        super(db.Content);
         this.activityService = new ActivityService(db.Activity);
         this.playlistService = new PlaylistService(db.Playlist, db.PlaylistContent);
-    }
-
-    readOne(request, reply) {
-        var that = this;
-        this.model.findOne({
-            where: {
-                id: request.params.id
-            }
-        }).then(function(data) {
-            that.contentModel.findAll({
-                where: {
-                    module_id : request.params.id
-                }
-            }).then(function(content) {
-                var cleanData = data.get({plain: true});
-                cleanData.content = content;
-                reply(cleanData);
-            }).catch(function(err) {
-                reply(Boom.badImplementation(err));
-            })
-        }).catch(function(err) {
-            reply(Boom.badImplementation(err));
-        })
     }
 
     readAll(request, reply) {
@@ -55,12 +31,9 @@ module.exports = class ModuleRestHandler extends RestHandler {
         this.model.findAll(options).then(function(data) {
             Async.forEachOf(data, function(datum, index, callback) {
                 data[index] = data[index].get({plain: true});
-                that.activityService.getConsumedContentCount(request.auth.credentials.id, datum.default_playlist_id, function(err1, count) {
-                    data[index]['media_consumed'] = count;
-                    that.playlistService.getContentCount(datum.default_playlist_id, function(err2, total) {
-                        data[index].media_total = total;
-                        callback(err1 || err2);
-                    });
+                that.activityService.isContentConsumed(request.auth.credentials.id, datum.id, function(err, consumed) {
+                    data[index]['consumed'] = consumed;
+                    callback(err);
                 });
             }, function(err) {
                 if(err) {

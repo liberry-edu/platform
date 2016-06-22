@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
     },
     description: DataTypes.STRING,
+    image: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
     },
     parent_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    default_playlist_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }

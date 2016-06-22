@@ -1,5 +1,8 @@
 'use strict';
+
+const Boom = require('boom');
 const DirTree = require('directory-tree');
+const ActivityService = require('../service/activity_service');
 
 var ready = function(server, next) {
 
@@ -28,6 +31,40 @@ var ready = function(server, next) {
             }
         });
     }
+
+    server.route({
+        method: 'GET',
+        path: '/consumed',
+        config : {
+            handler: function(request, reply) {
+                var activityService = new ActivityService(server.db.Activity);
+                activityService.getConsumedContentCount(request.auth.credentials.id, request.query.playlist_id, function(err, data) {
+                    if(err) {
+                        return reply(Boom.badImplementation(err));
+                    }
+                    reply(data);
+                });
+            },
+            plugins: {'hapiAuthorization': {role: ['ADMIN', 'USER']}}
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/isConsumed',
+        config : {
+            handler: function(request, reply) {
+                var activityService = new ActivityService(server.db.Activity);
+                activityService.isContentConsumed(request.auth.credentials.id, request.query.playlist_id, request.query.content_id, function(err, data) {
+                    if(err) {
+                        return reply(Boom.badImplementation(err));
+                    }
+                    reply(data);
+                });
+            },
+            plugins: {'hapiAuthorization': {role: ['ADMIN', 'USER']}}
+        }
+    });
 
     next();
 }
