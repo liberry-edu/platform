@@ -37,7 +37,7 @@ var ready = function(server, next) {
     const moduleHandler = new ModuleRestHandler(server.db);
     register(server, '/modules', moduleHandler);
 
-    const playlistHandler = new PlaylistRestHandler(server.db.Playlist, server.db.PlaylistContent);
+    const playlistHandler = new PlaylistRestHandler(server.db.Playlist, server.db.PlaylistContent, server.db.Content);
     register(server, '/playlists', playlistHandler);
 
     const contentHandler = new ContentRestHandler(server.db);
