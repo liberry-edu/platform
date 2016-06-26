@@ -5,6 +5,10 @@ const RestHandler = require('../../helpers/rest_handler');
 
 module.exports = class ActivityRestHandler extends RestHandler {
 
+    constructor(db) {
+        super(db.Activity);
+    }
+
     create(request, reply) {
         request.payload.mac = request.server.mac;
         request.payload.user_id = request.auth.credentials.id;

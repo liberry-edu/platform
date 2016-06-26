@@ -37,7 +37,7 @@ var ready = function(server, next) {
     const moduleHandler = new ModuleRestHandler(server.db);
     register(server, '/modules', moduleHandler);
 
-    const playlistHandler = new PlaylistRestHandler(server.db.Playlist, server.db.PlaylistContent, server.db.Content);
+    const playlistHandler = new PlaylistRestHandler(server.db);
     register(server, '/playlists', playlistHandler);
 
     const contentHandler = new ContentRestHandler(server.db);
@@ -55,7 +55,7 @@ var ready = function(server, next) {
     const appHandler = new RestHandler(server.db.App);
     register(server, '/apps', appHandler);
 
-    const activityHandler = new ActivityRestHandler(server.db.Activity);
+    const activityHandler = new ActivityRestHandler(server.db);
     register(server, '/activities', activityHandler, writePermissions);
 
     next();
