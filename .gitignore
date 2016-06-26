@@ -5,6 +5,7 @@ npm-debug.log*
 
 # Runtime data
 pids
+/.idea
 *.pid
 *.seed
 

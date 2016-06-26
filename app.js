@@ -22,7 +22,7 @@ if(!(process.env.LIBERRY_ROOT)) {
 const server = new Hapi.Server();
 server.connection({
     host: process.env.HOST || 'localhost',
-    port: process.env.PORT || 8080,
+    port: process.env.PORT || 10000,
     routes: {
 		plugins: {
 			hapiAuthorization: { roles: ['ADMIN', 'USER'] }
