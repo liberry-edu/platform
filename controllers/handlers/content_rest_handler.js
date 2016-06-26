@@ -16,17 +16,22 @@ module.exports = class ContentRestHandler extends RestHandler {
     readAll(request, reply) {
         var that = this;
         var options = {};
-        if(request.query.offset) {
-            options.offset = parseInt(request.query.offset);
+        try {
+            if(request.query.offset) {
+                options.offset = parseInt(request.query.offset);
+            }
+            if(request.query.limit) {
+                options.limit = parseInt(request.query.limit);
+            }
+            if(request.query.filters) {
+                options.where = JSON.parse(request.query.filters);
+            }
+            if(request.query.sortField && request.query.sortDir) {
+                options.order = request.query.sortField + " " + request.query.sortDir;
+            }
         }
-        if(request.query.limit) {
-            options.limit = parseInt(request.query.limit);
-        }
-        if(request.query.filters) {
-            options.where = JSON.parse(request.query.filters);
-        }
-        if(request.query.sortField && request.query.sortDir) {
-            options.order = request.query.sortField + " " + request.query.sortDir;
+        catch(err) {
+            return reply(Boom.badRequest(err));
         }
         this.model.findAll(options).then(function(data) {
             Async.forEachOf(data, function(datum, index, callback) {
