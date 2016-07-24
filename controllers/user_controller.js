@@ -1,14 +1,27 @@
 'use strict';
 
+const Bcrypt = require('bcrypt');
+const async = require('async');
+const Boom = require('boom');
+const Joi = require('joi');
+
 var ready = function(server, next) {
-    const Bcrypt = require('bcrypt');
-    const async = require('async');
-    const Boom = require('boom');
 
     server.route({
         method: 'POST',
         path: '/register',
         config: {
+            description: "This endpoint is used to register a new user",
+            notes: 'The created user details will be returned. This api can only be used to create users with role USER. Users have to be assigned role ADMIN directly in the database',
+            tags: ["api"],
+            validate: {
+                    payload: {
+                        username: Joi.string().required().description("The unique username for the user"),
+                        password: Joi.string().required().description("The password for the user"),
+                        name: Joi.string().description("Name of the user"),
+                        email: Joi.string().email().description("Email of the user")
+                    }
+            },
             handler: function(request, reply) {
                 async.waterfall([
                     function(callback) {
@@ -23,7 +36,7 @@ var ready = function(server, next) {
                             else {
                                 callback(null);
                             }
-                        })
+                        });
                     },
                     function(callback) {
                         Bcrypt.hash(request.payload.password, 8 , function(err, hash) {
@@ -35,7 +48,7 @@ var ready = function(server, next) {
                                 callback(null, user);
                             }).catch(function(err) {
                                 callback(err, null);
-                            })
+                            });
                         });
                     }
                 ], function(err, user) {
@@ -45,7 +58,7 @@ var ready = function(server, next) {
                     else {
                         reply(user);
                     }
-                })
+                });
             },
             auth: false,
             plugins: {'hapiAuthorization': false}
@@ -55,8 +68,13 @@ var ready = function(server, next) {
     server.route({
         method: 'GET',
         path: '/me',
-        handler: function(request, reply) {
-            reply(request.auth.credentials);
+        config: {
+            description: "This endpoint is used to get logged in user's information",
+            notes: 'The user info is returned at the time of login and hence this api should generally never be needed',
+            tags: ["api"],
+            handler: function(request, reply) {
+                reply(request.auth.credentials);
+            }
         }
     });
 
@@ -64,6 +82,15 @@ var ready = function(server, next) {
         method: 'POST',
         path: '/isValidUser',
         config: {
+            description: "This endpoint is used to test if user credentials are correct",
+            notes: 'The response will be a boolean',
+            tags: ["api"],
+            validate: {
+                    payload: {
+                        username: Joi.string().required().description("The unique username for the user"),
+                        password: Joi.string().required().description("The password for the user"),
+                    }
+            },
             handler: function(request, reply) {
                 async.waterfall([
                     function(callback) {
@@ -78,7 +105,7 @@ var ready = function(server, next) {
                             else {
                                 return reply(false);
                             }
-                        })
+                        });
                     },
                     function(user, callback) {
                         Bcrypt.compare(request.payload.password, user.password, (err, isValid) => {
@@ -100,15 +127,15 @@ var ready = function(server, next) {
                     else {
                         reply(true);
                     }
-                })
+                });
             },
             auth: false,
             plugins: {'hapiAuthorization': false}
         }
-    })
+    });
 
     next();
-}
+};
 
 exports.register = function (server, options, next) {
     server.dependency('auth', ready);

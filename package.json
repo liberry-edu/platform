@@ -18,12 +18,15 @@
     "hapi": "^13.4.1",
     "hapi-auth-basic": "^4.2.0",
     "hapi-authorization": "^3.0.2",
+    "hapi-swagger": "^6.1.0",
     "inert": "^4.0.0",
+    "joi": "^9.0.1",
     "mysql": "^2.11.1",
     "ng-admin": "^1.0.0-alpha2",
     "ng-file-upload": "^12.0.4",
     "sequelize": "^3.23.3",
     "sqlite3": "^3.1.4",
+    "vision": "^4.1.0",
     "vows": "^0.8.1"
   }
 }

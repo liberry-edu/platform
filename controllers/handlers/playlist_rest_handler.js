@@ -36,7 +36,7 @@ module.exports = class PlaylistRestHandler extends RestHandler {
                     }).then(function(content_data) {
                         content_data = content_data.get({plain: true});
                         that.activityService.isContentConsumed(request.auth.credentials.id, content_data.id, function(err, consumed) {
-                            content_data['consumed'] = consumed;
+                            content_data.consumed = consumed;
                             content.push(content_data);
                             callback(err);
                         });
@@ -55,6 +55,6 @@ module.exports = class PlaylistRestHandler extends RestHandler {
             });
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
-}
+};

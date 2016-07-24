@@ -31,10 +31,10 @@ module.exports = class ModuleRestHandler extends RestHandler {
                 reply(cleanData);
             }).catch(function(err) {
                 reply(Boom.badImplementation(err));
-            })
+            });
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
 
     readAll(request, reply) {
@@ -61,7 +61,7 @@ module.exports = class ModuleRestHandler extends RestHandler {
             Async.forEachOf(data, function(datum, index, callback) {
                 data[index] = data[index].get({plain: true});
                 that.activityService.getConsumedContentCount(request.auth.credentials.id, datum.default_playlist_id, function(err1, count) {
-                    data[index]['media_consumed'] = count;
+                    data[index].media_consumed = count;
                     that.playlistService.getContentCount(datum.default_playlist_id, function(err2, total) {
                         data[index].media_total = total;
                         callback(err1 || err2);
@@ -75,6 +75,6 @@ module.exports = class ModuleRestHandler extends RestHandler {
             });
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
-}
+};

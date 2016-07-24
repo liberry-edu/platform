@@ -37,7 +37,7 @@ module.exports = class ContentRestHandler extends RestHandler {
             Async.forEachOf(data, function(datum, index, callback) {
                 data[index] = data[index].get({plain: true});
                 that.activityService.isContentConsumed(request.auth.credentials.id, datum.id, function(err, consumed) {
-                    data[index]['consumed'] = consumed;
+                    data[index].consumed = consumed;
                     callback(err);
                 });
             }, function(err) {
@@ -48,6 +48,6 @@ module.exports = class ContentRestHandler extends RestHandler {
             });
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
-}
+};

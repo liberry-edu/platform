@@ -16,6 +16,6 @@ module.exports = class ActivityRestHandler extends RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badRequest(err));
-        })
+        });
     }
-}
+};

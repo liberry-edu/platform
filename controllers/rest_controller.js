@@ -1,5 +1,6 @@
 'use strict';
 
+const Joi = require('joi');
 const RestHandler = require('../helpers/rest_handler');
 const ModuleRestHandler = require('./handlers/module_rest_handler');
 const PlaylistRestHandler = require('./handlers/playlist_rest_handler');
@@ -59,7 +60,7 @@ var ready = function(server, next) {
     register(server, '/activities', activityHandler, writePermissions);
 
     next();
-}
+};
 
 var register = function(server, endpoint, handler, permissions) {
 
@@ -71,10 +72,22 @@ var register = function(server, endpoint, handler, permissions) {
         method: 'POST',
         path: endpoint,
         config: {
+            description: "This endpoint is used to create the resource",
+            notes: 'The created resource details will be returned.',
+            tags: ["api"],
+            validate: {
+                    payload: {
+                    }
+            },
             handler: function(request, reply) {
                 handler.create(request, reply);
             },
-            plugins: {'hapiAuthorization': permissions[0]}
+            plugins: {
+                'hapiAuthorization': permissions[0],
+                'hapi-swagger': {
+                    payloadType: 'json'
+                }
+            }
         }
     });
 
@@ -82,6 +95,18 @@ var register = function(server, endpoint, handler, permissions) {
         method: 'GET',
         path: endpoint,
         config: {
+            description: "This endpoint is used to get the collection of resource",
+            notes: 'All available resource details will be returned',
+            tags: ["api"],
+            validate: {
+                    query: {
+                        offset: Joi.number().integer().description("The number of records to skip"),
+                        limit: Joi.number().integer().description("The number of records to fetch"),
+                        sortField: Joi.string().description("The field to sort on"),
+                        sortDir: Joi.string().description("The direction to sort (ASC, DESC)"),
+                        filters: Joi.object().description("The direction to sort (ASC, DESC)"),
+                    }
+            },
             handler: function(request, reply) {
                 handler.readAll(request, reply);
             },
@@ -93,6 +118,14 @@ var register = function(server, endpoint, handler, permissions) {
         method: 'GET',
         path: endpoint + '/{id}',
         config: {
+            description: "This endpoint is used to get one resource",
+            notes: 'Resource details will be returned',
+            tags: ["api"],
+            validate: {
+                    params: {
+                        id: Joi.number().integer().description("The id of the resource")
+                    }
+            },
             handler: function(request, reply) {
                 handler.readOne(request, reply);
             },
@@ -104,6 +137,17 @@ var register = function(server, endpoint, handler, permissions) {
         method: 'PUT',
         path: endpoint + '/{id}',
         config: {
+            description: "This endpoint is used to update one resource",
+            notes: 'Resource details will be returned',
+            tags: ["api"],
+            validate: {
+                    params: {
+                        id: Joi.number().integer().description("The id of the resource")
+                    },
+                    payload: {
+
+                    }
+            },
             handler: function(request, reply) {
                 handler.update(request, reply);
             },
@@ -115,13 +159,21 @@ var register = function(server, endpoint, handler, permissions) {
         method: 'DELETE',
         path: endpoint + '/{id}',
         config: {
+            description: "This endpoint is used to delete one resource",
+            notes: 'Resource details will be returned',
+            tags: ["api"],
+            validate: {
+                    params: {
+                        id: Joi.number().integer().description("The id of the resource")
+                    }
+            },
             handler: function(request, reply) {
                 handler.delete(request, reply);
             },
             plugins: {'hapiAuthorization': permissions[4]}
         }
     });
-}
+};
 
 exports.register = function (server, options, next) {
     server.dependency('auth', ready);

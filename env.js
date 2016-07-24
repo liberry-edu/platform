@@ -25,4 +25,4 @@ module.exports = {
           "dialect": process.env.MODE == "central" ? "mysql" : "sqlite"
         }
     }
-}
+};

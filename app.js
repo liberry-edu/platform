@@ -2,10 +2,13 @@
 
 const Hapi = require('hapi');
 const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
 const Db = require('./models/db');
 const Auth = require('./middleware/auth');
 const Mac = require('./middleware/mac');
 const Env = require('./middleware/env');
+const Pack = require('./package');
 const UserController = require('./controllers/user_controller');
 const AdminController = require('./controllers/admin_controller');
 const RestController = require('./controllers/rest_controller');
@@ -34,6 +37,20 @@ var plugins = [
     {
         register: Inert,
         options: {}
+    },
+    {
+        register: Vision,
+        options: {}
+    },
+    {
+        register: HapiSwagger,
+        options: {
+            info: {
+                title: 'API Documentation',
+                version: Pack.version
+            },
+            payloadType: 'form'
+        }
     },
     {
         register: Db,

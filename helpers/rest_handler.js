@@ -4,7 +4,7 @@ const Boom = require('boom');
 
 module.exports = class RestHandler {
     constructor(model) {
-        this.model = model
+        this.model = model;
     }
 
     create(request, reply) {
@@ -13,7 +13,7 @@ module.exports = class RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badRequest(err));
-        })
+        });
     }
 
     readOne(request, reply) {
@@ -25,7 +25,7 @@ module.exports = class RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
 
     readAll(request, reply) {
@@ -51,7 +51,7 @@ module.exports = class RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
 
     update(request, reply) {
@@ -63,7 +63,7 @@ module.exports = class RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
 
     delete(request, reply) {
@@ -77,6 +77,6 @@ module.exports = class RestHandler {
             reply(data);
         }).catch(function(err) {
             reply(Boom.badImplementation(err));
-        })
+        });
     }
-}
+};
